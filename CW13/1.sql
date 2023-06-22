@@ -32,3 +32,10 @@ join category on category.category_id = film_category.category_id
 join language on language.language_id = film.language_id;
 
 --6
+SELECT film.title, customer.first_name, (rental.return_rate - rental.rental_date) as rent_duration
+from customer
+join rental on rental.customer_id = customer.customer_id
+join inventory on inventory.inventory_id = rental.inventory_id
+join film on inventory.film_id = film.film_id
+ORDER BY (rental.return_rate - rental.rental_date) DESC;
+

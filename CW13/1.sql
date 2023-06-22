@@ -26,3 +26,9 @@ GROUP BY category.name
 having 60 < COUNT(film. film_id) < 68;
 
 --5
+SELECT film.title, category.name as category, language.name as language from film
+join film_category on film.film_id = film_category.film_id
+join category on category.category_id = film_category.category_id
+join language on language.language_id = film.language_id;
+
+--6

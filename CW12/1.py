@@ -17,10 +17,25 @@ class ToDoRequestHandler(BaseHTTPRequestHandler) :
         else:
             self._set_headers(404)
             self.wfile.write("Not Found".encode())
-            
+
 
     def do_post(self) :
-        pass
+        if self.path == "/" :
+            content_length = int(self.headers["Content-length"])
+            payload = self.rfile.read(content_length).decode()
+            try :
+                to_do_item = json.loads(payload)
+                to_do_list.append(to_do_item)
+                self._set_headers(201, "text/plain")
+                self.wfile.write("To-do Item Created".encode())
+            except json.JSONDecodeError :
+                self. _set_headers(400)
+                self.wfile.write("Inavalid Json payload".encode())
+        else :
+            self._set_headers(404)
+            self.wfile.write("Not Found".encode())
+
+
 
 
 def run_server() :

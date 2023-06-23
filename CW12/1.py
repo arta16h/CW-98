@@ -1,48 +1,49 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-to_do_list = []
+todo_list = []
 
-class ToDoRequestHandler(BaseHTTPRequestHandler) :
-    def _set_headers(self, status_code = 200, content_type = "text/plain") :
+
+class TodoRequestHandler(BaseHTTPRequestHandler):
+    
+
+    def _set_headers(self, status_code=200, content_type="text/plain"):
         self.send_response(status_code)
         self.send_header("Content-type", content_type)
         self.end_headers()
 
 
-    def do_get(self) :
-        if self.path == "/" :
+    def do_GET(self):
+        if self.path == "/":
             self._set_headers(200, "application/json")
-            self.wfile.write(json.dumps(to_do_list).encode())
+            self.wfile.write(json.dumps(todo_list).encode())
         else:
             self._set_headers(404)
-            self.wfile.write("Not Found".encode())
+            self.wfile.write("Not found".encode())
 
 
-    def do_post(self) :
-        if self.path == "/" :
-            content_length = int(self.headers["Content-length"])
+    def do_POST(self):
+        if self.path == "/":
+            content_length = int(self.headers["Content-Length"])
             payload = self.rfile.read(content_length).decode()
-            try :
-                to_do_item = json.loads(payload)
-                to_do_list.append(to_do_item)
+            try:
+                todo_item = json.loads(payload)
+                todo_list.append(todo_item)
                 self._set_headers(201, "text/plain")
-                self.wfile.write("To-do Item Created".encode())
-            except json.JSONDecodeError :
-                self. _set_headers(400)
-                self.wfile.write("Inavalid Json payload".encode())
-        else :
+                self.wfile.write("Todo item created".encode())
+            except json.JSONDecodeError:
+                self._set_headers(400)
+                self.wfile.write("Invalid JSON payload".encode())
+        else:
             self._set_headers(404)
-            self.wfile.write("Not Found".encode())
+            self.wfile.write("Not found".encode())
 
 
-
-
-def run_server() :
-    server_address = {"localhost,8000"}
-
-    httpd = HTTPServer(server_address, ToDoRequestHandler)
+def run_server():
+    server_address = ("localhost", 8000)
+    httpd = HTTPServer(server_address, TodoRequestHandler)
     print("Server started on http://localhost:8000")
+    httpd.serve_forever()
 
-if __name__ == "__main__" :
+if __name__ == "__main__":
     run_server()

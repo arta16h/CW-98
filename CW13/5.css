@@ -1,0 +1,43 @@
+body{
+    margin: 0;
+    background-image: radial-gradient(circle,  rgb(37, 44, 48), rgb(77,88,99), rgb(52, 51, 57));
+    width: 100%;
+    overflow: hidden;
+}
+.container{
+    width: 500px;
+    height: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.picture{
+    border: 1px, solid, gainsboro;
+    border-radius: 15px;
+    height: 50%;
+    color: black;
+}
+.head{
+    height: 100px;
+    width: 100%;
+    padding-top: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    overflow: hidden;
+}
+.logo{
+    width: 25px;
+    height: 25px;
+    overflow: clip;
+}
+.Nasa{
+    font-size: 20px;
+}
+.dots{
+    width: 25px;
+    height: 25px;
+    overflow: clip;
+}

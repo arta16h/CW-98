@@ -1,8 +1,6 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from .models import Task, Category, Tag
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from .models import Task, Category, Tag, Create_Category,Create_Task
 from django.core.paginator import Paginator
-from category import Create_Category
 
 
 def home(request):
@@ -59,4 +57,12 @@ def createcategory(request) :
 def category_view(request) :
     context = {}
     context['category'] = Category.objects.all()
-    return render(request, "category_view.html", context)
+    return render(request, "categories.html", context)
+
+def createtask(request) :
+    context = {}
+    form = Create_Task(request.POST or None)
+    if form.is_valid() :
+        form.save()
+    context['form'] = form
+    return render(request, "createtask.html", context)

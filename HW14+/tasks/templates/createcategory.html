@@ -7,14 +7,24 @@
     padding: 10rem;
 }
 .inpt{
+    width: 50%;
     background-color: #fff000;
     color: rgb(36, 37, 38);
     padding: 0.5rem 3rem;
     border-radius: 20px;
     border: #fff000 1px solid;
+    font-family: 'Noto Sans', sans-serif;
 }
+.it{
+    height: 3rem;
+    font-family: 'Noto Sans', sans-serif;
+    width: 50%;}
 h1{
+    font-family: 'Noto Sans', sans-serif;
     padding-bottom: 5rem;
+}
+h3{
+    font-family: 'Noto Sans', sans-serif;
 }
 </style>
 <section class="create-category">
@@ -23,7 +33,9 @@ h1{
         <!-- Security token -->
         {% csrf_token %}     
         <!-- Using the formset -->
-        {{ form.as_p }}         
+        <h3 class="name">Name</h3>
+        <input class="it" type="text" name="name" maxlength="50" required="" id="id_name"> 
+        <br> <br>  <br> <br>      
         <input type="submit" value="Submit" class="inpt">
     </form>
 </section>

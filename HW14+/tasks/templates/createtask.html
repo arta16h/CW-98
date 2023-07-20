@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-.create-category{
+.create-task{
     width: 100%;
     height: 35rem;
     padding: 10rem;
@@ -15,10 +15,11 @@
 }
 h1{
     padding-bottom: 5rem;
+    
 }
 </style>
-<section class="create-category">
-    <h1>Create a new Category</h1>
+<section class="create-task">
+    <h1>Create a new Task</h1>
     <form method="POST" enctype="multipart/form-data"> 
         <!-- Security token -->
         {% csrf_token %}     

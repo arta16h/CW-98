@@ -56,6 +56,7 @@
             /* Pie Chart */
             .pie{
                 padding-top: 1rem;
+                display: flex;
             }
             .donut-chart {
                 position: relative;
@@ -172,14 +173,15 @@
             }
             
             .statistics{
-                width: auto;
+
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
+                margin: 0;
             }
             .project-statistics{
                 width: 20rem;
-                height: 14rem;
+                height: 20rem;
                 background-color: rgb(37, 44, 48);
                 color: #fff;
                 border-radius: 2rem;
@@ -187,6 +189,9 @@
                 margin: 1.5rem;
                 margin-top: 0.3rem;
                 display: flex;
+            }
+            .create-category{
+                width: 50%;
             }
             .new, .done, .in-progress{
                 display: flex;
@@ -501,156 +506,155 @@
         </div>
     </div>
     <div class="bodyy">
-        <div class="body-pg">
-            <div class="row">
-                <div class="container mt-3">
-                  {% block content %}
-                  {% endblock %}
+            <div class="body-pg">
+                <div class="row">
+                    <div class="container mt-3">
+                    {% block content %}
+                    {% endblock %}
+                    </div>
                 </div>
-              </div>
-            <div class="statistics">
-        <div class="calendar">
-            <div class="calendar-header">
-                <span class="month-picker" id="month-picker">April</span>
-                <div class="year-picker">
-                    <span class="year-change" id="prev-year">
-                        <pre><</pre>
-                    </span>
-                    <span id="year">2022</span>
-                    <span class="year-change" id="next-year">
-                        <pre>></pre>
-                    </span>
+                <div class="statistics">
+            <div class="calendar">
+                <div class="calendar-header">
+                    <span class="month-picker" id="month-picker">April</span>
+                    <div class="year-picker">
+                        <span class="year-change" id="prev-year">
+                            <pre><</pre>
+                        </span>
+                        <span id="year">2022</span>
+                        <span class="year-change" id="next-year">
+                            <pre>></pre>
+                        </span>
+                    </div>
                 </div>
+                <div class="calendar-body">
+                    <div class="calendar-week-day">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="calendar-days"></div>
+                </div>
+            
+                <div class="month-list"></div>
             </div>
-            <div class="calendar-body">
-                <div class="calendar-week-day">
-                    <div>Sun</div>
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
-                </div>
-                <div class="calendar-days"></div>
-            </div>
-           
-            <div class="month-list"></div>
-        </div>
-        <script>
-            let calendar = document.querySelector('.calendar')
+            <script>
+                let calendar = document.querySelector('.calendar')
 
-            const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-            isLeapYear = (year) => {
-                return (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) || (year % 100 === 0 && year % 400 ===0)
-            }
+                isLeapYear = (year) => {
+                    return (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) || (year % 100 === 0 && year % 400 ===0)
+                }
 
-            getFebDays = (year) => {
-                return isLeapYear(year) ? 29 : 28
-            }
+                getFebDays = (year) => {
+                    return isLeapYear(year) ? 29 : 28
+                }
 
-            generateCalendar = (month, year) => {
+                generateCalendar = (month, year) => {
 
-                let calendar_days = calendar.querySelector('.calendar-days')
-                let calendar_header_year = calendar.querySelector('#year')
+                    let calendar_days = calendar.querySelector('.calendar-days')
+                    let calendar_header_year = calendar.querySelector('#year')
 
-                let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                    let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-                calendar_days.innerHTML = ''
+                    calendar_days.innerHTML = ''
+
+                    let currDate = new Date()
+                    if (month > 11 || month < 0) month = currDate.getMonth()
+                    if (!year) year = currDate.getFullYear()
+
+                    let curr_month = `${month_names[month]}`
+                    month_picker.innerHTML = curr_month
+                    calendar_header_year.innerHTML = year
+
+                    // get first day of month
+                    
+                    let first_day = new Date(year, month, 1)
+
+                    for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
+                        let day = document.createElement('div')
+                        if (i >= first_day.getDay()) {
+                            day.classList.add('calendar-day-hover')
+                            day.innerHTML = i - first_day.getDay() + 1
+                            day.innerHTML += `<span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>`
+                            if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
+                                day.classList.add('curr-date')
+                            }
+                        }
+                        calendar_days.appendChild(day)
+                    }
+                }
+
+                let month_list = calendar.querySelector('.month-list')
+
+                month_names.forEach((e, index) => {
+                    let month = document.createElement('div')
+                    month.innerHTML = `<div data-month="${index}">${e}</div>`
+                    month.querySelector('div').onclick = () => {
+                        month_list.classList.remove('show')
+                        curr_month.value = index
+                        generateCalendar(index, curr_year.value)
+                    }
+                    month_list.appendChild(month)
+                })
+
+                let month_picker = calendar.querySelector('#month-picker')
+
+                month_picker.onclick = () => {
+                    month_list.classList.add('show')
+                }
 
                 let currDate = new Date()
-                if (month > 11 || month < 0) month = currDate.getMonth()
-                if (!year) year = currDate.getFullYear()
 
-                let curr_month = `${month_names[month]}`
-                month_picker.innerHTML = curr_month
-                calendar_header_year.innerHTML = year
+                let curr_month = {value: currDate.getMonth()}
+                let curr_year = {value: currDate.getFullYear()}
 
-                // get first day of month
-                
-                let first_day = new Date(year, month, 1)
-
-                for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
-                    let day = document.createElement('div')
-                    if (i >= first_day.getDay()) {
-                        day.classList.add('calendar-day-hover')
-                        day.innerHTML = i - first_day.getDay() + 1
-                        day.innerHTML += `<span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>`
-                        if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
-                            day.classList.add('curr-date')
-                        }
-                    }
-                    calendar_days.appendChild(day)
-                }
-            }
-
-            let month_list = calendar.querySelector('.month-list')
-
-            month_names.forEach((e, index) => {
-                let month = document.createElement('div')
-                month.innerHTML = `<div data-month="${index}">${e}</div>`
-                month.querySelector('div').onclick = () => {
-                    month_list.classList.remove('show')
-                    curr_month.value = index
-                    generateCalendar(index, curr_year.value)
-                }
-                month_list.appendChild(month)
-            })
-
-            let month_picker = calendar.querySelector('#month-picker')
-
-            month_picker.onclick = () => {
-                month_list.classList.add('show')
-            }
-
-            let currDate = new Date()
-
-            let curr_month = {value: currDate.getMonth()}
-            let curr_year = {value: currDate.getFullYear()}
-
-            generateCalendar(curr_month.value, curr_year.value)
-
-            document.querySelector('#prev-year').onclick = () => {
-                --curr_year.value
                 generateCalendar(curr_month.value, curr_year.value)
-            }
 
-            document.querySelector('#next-year').onclick = () => {
-                ++curr_year.value
-                generateCalendar(curr_month.value, curr_year.value)
-}
-        </script>
-        <div class="project-statistics">
-            <div class="description">
-            <div class="new">
-                <div class="nw"></div>
-                <h3>To do(3)</h3>
+                document.querySelector('#prev-year').onclick = () => {
+                    --curr_year.value
+                    generateCalendar(curr_month.value, curr_year.value)
+                }
+
+                document.querySelector('#next-year').onclick = () => {
+                    ++curr_year.value
+                    generateCalendar(curr_month.value, curr_year.value)
+    }
+            </script>
+            <div class="project-statistics">
+                <div class="description">
+                <div class="new">
+                    <div class="nw"></div>
+                    <h3>To do(3)</h3>
+                </div>
+                <div class="in-progress">
+                    <div class="in-prgrs"></div>
+                    <h3>In Progress(4)</h3>
+                </div>
+                <div class="done">
+                    <div class="dn"></div>
+                    <h3>Done(3)</h3>
+                </div>
+                <div class="pie">
+                    <div class="donut-chart-block block"> 
+                        <div class="donut-chart">
+                            <div id="part1" class="portion-block"><div class="circle"></div></div>
+                            <div id="part2" class="portion-block"><div class="circle"></div></div>
+                            <div id="part3" class="portion-block"><div class="circle"></div></div>
+                            <p class="center"></p>        
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="in-progress">
-                <div class="in-prgrs"></div>
-                <h3>In Progress(4)</h3>
             </div>
-            <div class="done">
-                <div class="dn"></div>
-                <h3>Done(3)</h3>
-            </div>
-            </div>
-            <div class="pie">
-                <div class="donut-chart-block block"> 
-                      <div class="donut-chart">
-                          <div id="part1" class="portion-block"><div class="circle"></div></div>
-                          <div id="part2" class="portion-block"><div class="circle"></div></div>
-                          <div id="part3" class="portion-block"><div class="circle"></div></div>
-                          <p class="center"></p>        
-                      </div>
-                 </div>
-            </div>
-        </div>
-        </div>
         </div>
     
     <div class="container">

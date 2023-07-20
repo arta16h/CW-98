@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <style>
+        .card {
+            background-color: rgb(37, 44, 48);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .related-posts {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .related-posts li {
+            margin-bottom: 5px;
+        }
+
+        .related-posts li a {
+            color: #fff000;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .related-posts li a:hover {
+            color: #e74c3c;
+        }
+        </style>
+
+        <h1 class="mb-4">All Categories</h1>
+        {% for category in categories %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ category.name }}</h5>
+                        <p class="card-text">{{ category.description }}</p>
+                        <h6 class="mb-3">Related Posts:</h6>
+                        <ul class="related-posts">
+                            {% for task in category.task_set.all %}
+                            <li><a href="{% url 'task' task.id %}">{{ task.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

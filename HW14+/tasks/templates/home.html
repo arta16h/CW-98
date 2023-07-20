@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        {% for task in page_obj %}
+            <p class="title">{{ task.title }}</p>
+            <p class="title">Details</p>
+            <p><strong>Tags:</strong> {% for tag in task.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            <p><strong>Category:</strong> {{ task.category.name }}</p>
+        {% endfor %}
+    </div>
+    
+    <ul class="ul-box">
+        {% for task in tasks %}
+          <li class="task-box"><a href="{% url 'task' task.id %}">{{ task.title }}</a></li>
+        {% endfor %}
+    </ul>
+    
+    
+{% endblock %}

@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'Home',
+    "Home",
     "Config",
 ]
 

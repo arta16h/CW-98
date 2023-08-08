@@ -5,17 +5,22 @@ from .mixins import TodoMixin
 
 
 class IndexView(View):
+    template_name = 'Home/todo_list.html'
     def get(self, request):
-        return render(request, 'Home/index.html')
+        return render(request, self.template_name)
 
 
 class TodoListView(View):
-    def get(self, request):
+    template_name = 'Home/todo_list.html'
+    def get(self, request, *args, **kwargs):
         todos = Todo.objects.all()
-        return render(request, 'Home/todo_list.html', {'todos': todos})
+        return render(request, self.template_name, {'todos': todos})
+    
 
 
 class TodoDetailView(TodoMixin, View):
     template_name = 'Home/todo_detail.html'
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
 

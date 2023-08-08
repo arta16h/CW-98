@@ -1,8 +1,7 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from django.contrib import admin
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
-    path('todos/', views.TodoListView.as_view(), name='todo_list'),
-    path('todos/<int:pk>/', views.TodoDetailView.as_view(), name='todo_detail'),
+    path('', include('Home.urls')),
+    path('admin/', admin.site.urls),
 ]

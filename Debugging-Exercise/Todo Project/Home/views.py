@@ -19,7 +19,7 @@ class TodoListView(View):
     
 
 
-class TodoDetailView(TodoMixin):
+class TodoDetailView(View):
     template_name = 'Home/todo_detail.html'
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)

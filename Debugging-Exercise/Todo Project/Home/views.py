@@ -13,12 +13,13 @@ class IndexView(View):
 class TodoListView(View):
     template_name = 'Home/todo_list.html'
     def get(self, request, *args, **kwargs):
-        todos = Todo.objects.all()
-        return render(request, self.template_name, {'todos': todos})
+        todos = Todo.objects.filter(request)
+        context = {'todos': todos}
+        return render(request, self.template_name, context)
     
 
 
-class TodoDetailView(TodoMixin, View):
+class TodoDetailView(TodoMixin):
     template_name = 'Home/todo_detail.html'
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)

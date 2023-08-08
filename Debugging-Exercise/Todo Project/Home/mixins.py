@@ -14,11 +14,15 @@ class TodoMixin:
         todo = Todo.objects.get(id=kwargs['pk'])
         if not todo.user == request.user:
             raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
+        else:
+            return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         todo = Todo.objects.get(kwargs['pk'])
-        return render(request, self.template_name, {'todo': todo})
+        form = self.form_class()
+        form = self.form_class()
+        context = {'todo': todo, 'form':form}
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         todo = Todo.objects.get(kwargs['pk'])

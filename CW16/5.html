@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <form action="">
+        <label for="Username">Username</label>
+        <input type="text" id="Username" name="Username"><br>
+        <label for="Password">Password:</label>
+        <input type="password" id="Password" name="Password"><br>
+        <label for="rememberme">Remember me! </label>
+        <input type="checkbox" name="rememberme" value="rememberme"><br>
+        <input type="submit" value="Submit" onclick="login()">
+    </form>
+
+    <script>
+        document.getElementById("Username").value = getCookie("Username")
+        function login() {
+            const username = document.getElementById("Username").value
+            if (document.getElementById("rememberme").checked) {
+                document.cookie = "Username" + username + ";"
+            }
+        }
+        
+        function getCookie(username) {
+            const value = ";" + document.cookie
+            const parts = value.split(';' + username + '=')
+            if (parts.length === 2) {
+                return parts.pop().split(';').shift()
+            }
+        }
+    </script>
+</body>
+
+</html>

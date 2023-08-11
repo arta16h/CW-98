@@ -59,10 +59,17 @@ alert(getCookie(username))
 //4
 /* Write a program that displays the text in a DOM element when the user clicks
 on a button */
-// uploaded as 4. html
+// uploaded as 4.html
 
 //5
 /*  Write a program that allows the user to enter the site by entering a username
 and password. If the user ticks the remember me option, his username will be
 saved using a cookie so that it will be automatically entered in future visits to
 the site */
+// uploaded as 5.html 
+
+// 6
+/* Store your first name, last name, age, country, city in your browser
+localStorage. */
+
+

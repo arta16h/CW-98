@@ -71,5 +71,23 @@ the site */
 // 6
 /* Store your first name, last name, age, country, city in your browser
 localStorage. */
+let firstName = prompt("First Name: ")
+let lastName = prompt("Last Name: ")
+let age = prompt("Age: ")
+let country = prompt("Country: ")
+let city  = prompt("City: ")
+
+let profile = {
+    "firstName": firstName,
+    "lastName": lastName,
+    "age": age,
+    "country": country,
+    "city": city
+}
+
+let strProfile = JSON.stringify(profile)
+localStorage.setItem('profile', strProfile)
+alert(localStorage.getItem('profile'))
+
 
 

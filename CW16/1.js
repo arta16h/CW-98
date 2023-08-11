@@ -1,8 +1,13 @@
 // 1
+// Write a program that takes an input from the user and displays its type as alert.
 let data = prompt('Anything...')
 alert(data)
 
 // 2
+/* Write a program that gets the user's age. If the received age was between 0
+and 10, the word child, if the age was between 11 and 18, it was a teenager, if
+the age was between 19 and 30, it was a young person, and if the age was
+more than 30, an adult should be printed on the console. */
 let age = prompt('How old are you?', 20)
 if (0 <= Number(age) <= 10) {
         message = 'Child'
@@ -14,7 +19,11 @@ if (0 <= Number(age) <= 10) {
         message = 'Adult'
     }
 
+console.log(message)
+
 // 3
+/*Write a program that receives the username from the user, stores it in a cookie,
+and then retrieves the username from the cookie and greets her. */
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -43,3 +52,5 @@ setCookie('username', username)
 alert(getCookie(username))
 
 //4
+/* Write a program that displays the text in a DOM element when the user clicks
+on a button */

@@ -93,5 +93,15 @@ alert(localStorage.getItem('profile'))
 /* Create a student object. The student object will have first name, last name,
 age, skills, country, enrolled keys and values for the keys. Store the student
 object in your browser localStorage. */
-
+let student = {
+    firstName: "Arta",
+    lastName: "Hayati",
+    age: 23,
+    skills: ["KickBoxing", "Drawing", "Python :)"],
+    country: "Iran",
+    enrolled: true
+};
+localStorage.setItem("student", JSON.stringify(student));
+let retStudent = JSON.parse(localStorage.getItem("student"));
+console.log(retStudent);
 

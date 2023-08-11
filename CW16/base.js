@@ -1,7 +1,12 @@
 // 1
 // Write a program that takes an input from the user and displays its type as alert.
-let data = prompt('Anything...')
-alert(data)
+let data = document.getElementById("inputValue").value;
+
+if (!isNaN(data) && value.trim() !== "") {
+    alert("number");
+} else {
+    alert("string");
+}
 
 // 2
 /* Write a program that gets the user's age. If the received age was between 0

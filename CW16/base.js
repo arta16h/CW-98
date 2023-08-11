@@ -1,19 +1,19 @@
 // 1
 // Write a program that takes an input from the user and displays its type as alert.
-let data = document.getElementById("inputValue").value;
+/*let data = document.getElementById("inputValue").value;
 
 if (!isNaN(data) && value.trim() !== "") {
     alert("number");
 } else {
     alert("string");
-}
+}*/
 
 // 2
 /* Write a program that gets the user's age. If the received age was between 0
 and 10, the word child, if the age was between 11 and 18, it was a teenager, if
 the age was between 19 and 30, it was a young person, and if the age was
 more than 30, an adult should be printed on the console. */
-let age = prompt('How old are you?', 20)
+/*let age = prompt('How old are you?', 20)
 if (0 <= Number(age) <= 10) {
         message = 'Child'
     } else if (11< Number(age)< 18) {
@@ -24,12 +24,12 @@ if (0 <= Number(age) <= 10) {
         message = 'Adult'
     }
 
-console.log(message)
+console.log(message)*/
 
 // 3
 /*Write a program that receives the username from the user, stores it in a cookie,
 and then retrieves the username from the cookie and greets her. */
-function setCookie(cname, cvalue, exdays) {
+/*function setCookie(cname, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     let expires = "expires=" +d.toUTCString();
@@ -54,7 +54,7 @@ function getCookie(cname) {
 
 let username = prompt('Username: ')
 setCookie('username', username)
-alert(getCookie(username))
+alert(getCookie(username)) */
 
 //4
 /* Write a program that displays the text in a DOM element when the user clicks
@@ -71,7 +71,7 @@ the site */
 // 6
 /* Store your first name, last name, age, country, city in your browser
 localStorage. */
-let firstName = prompt("First Name: ")
+/*let firstName = prompt("First Name: ")
 let lastName = prompt("Last Name: ")
 let age = prompt("Age: ")
 let country = prompt("Country: ")
@@ -87,13 +87,13 @@ let profile = {
 
 let strProfile = JSON.stringify(profile)
 localStorage.setItem('profile', strProfile)
-alert(localStorage.getItem('profile'))
+alert(localStorage.getItem('profile')) */
 
 // 7
 /* Create a student object. The student object will have first name, last name,
 age, skills, country, enrolled keys and values for the keys. Store the student
 object in your browser localStorage. */
-let student = {
+/* let student = {
     firstName: "Arta",
     lastName: "Hayati",
     age: 23,
@@ -103,5 +103,13 @@ let student = {
 };
 localStorage.setItem("student", JSON.stringify(student));
 let retStudent = JSON.parse(localStorage.getItem("student"));
-console.log(retStudent);
+console.log(retStudent); */
+
+// 8
+/* Create an object called personAccount It has first name, last name, incomes,
+expenses properties and it has totalIncome, totalExpense, accountInfo,
+addIncome, addExpense and accountBalance methods. Incomes is a set of
+incomes and its description and expenses is also a set of expenses and its
+description. */
+
 

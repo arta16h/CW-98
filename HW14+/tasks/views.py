@@ -40,11 +40,6 @@ def task_page(request):
     return render(request, "task_page.html", context)
 
 
-def all_categories(request):
-    categories = Category.objects.all()
-    return render(request, "categories.html", {"categories": categories})
-
-
 def createcategory(request) :
     context = {}
     form = Create_Category(request.POST or None)
@@ -54,10 +49,19 @@ def createcategory(request) :
     context['form'] = form
     return render(request, "createcategory.html", context)
 
-def category_view(request) :
-    context = {}
-    context['category'] = Category.objects.all()
-    return render(request, "categories.html", context)
+
+class CategoriesView(ListView):
+    model = Category
+    template_name = "categories.html"
+    context_object_name = "categories"
+
+    def post(self, request):
+        name = request.POST.get("category_name")
+        description = request.POST.get("description")
+        image = request.FILES.get("image")
+        Category.objects.create(name=name, description=description, image=image)
+        return redirect("categories")
+
 
 def createtask(request) :
     context = {}
@@ -76,19 +80,19 @@ class TaskDetailView(View):
         return render(request, "task.html", {"task": task, "form": form})
 
     def post(self, request, task_id):
-        task = Task.objects.get(pk=task_id)
-        if "tag_submit" in request.POST:
-            label = request.POST.get("tag")
-            if not Tag.objects.filter(label=label).exists():
-                Tag.objects.create(label=label)
-            tag = Tag.objects.get(label=label)
-            task.tags.add(tag)
-
-            return redirect("task", task_id=task_id)
-
-        if "update_submit" in request.POST:
-            form = self.form_class(request.POST, instance=task)
-            if form.is_valid():
-                form.save()
+            task = Task.objects.get(pk=task_id)
+            if "tag_submit" in request.POST:
+                label = request.POST.get("tag")
+                if not Tag.objects.filter(label=label).exists():
+                    Tag.objects.create(label=label)
+                tag = Tag.objects.get(label=label)
+                task.tags.add(tag)
                 return redirect("task", task_id=task_id)
-            return render(request, "task.html", {"form": form})
+
+            if "update_submit" in request.POST:
+                form = self.form_class(request.POST, instance=task)
+                if form.is_valid():
+                    form.save()
+                    return redirect("task", task_id=task_id)
+                return render(request, "task.html", {"form": form})
+

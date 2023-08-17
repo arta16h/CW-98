@@ -3,17 +3,22 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, F
 from django.views import View
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
+from django.db.models import Q
 from .models import Task, Category, Tag, Create_Category,Create_Task
 from .forms import TaskUpdateForm
 
 
-
-def home(request):
-    tasks = Task.objects.all()
-    # paginator = Paginator(tasks, 4)
-    # page_number = request.GET.get("page")
-    # page_obj = paginator.get_page(page_number)
-    return render(request, "home.html", {"page_obj": tasks})
+class HomeView(ListView):
+    model = Task
+    template_name = "home.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        task_list = Task.objects.filter(Q(status__contains="in-progress"))
+        page = self.request.GET.get("page")
+        tasks = Paginator(task_list, 4).get_page(page)
+        context["tasks"] = tasks
+        return context
 
 
 def search(request):

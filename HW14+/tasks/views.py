@@ -75,4 +75,20 @@ class TaskDetailView(View):
         form = self.form_class(instance=task)
         return render(request, "task.html", {"task": task, "form": form})
 
+    def post(self, request, task_id):
+        task = Task.objects.get(pk=task_id)
+        if "tag_submit" in request.POST:
+            label = request.POST.get("tag")
+            if not Tag.objects.filter(label=label).exists():
+                Tag.objects.create(label=label)
+            tag = Tag.objects.get(label=label)
+            task.tags.add(tag)
 
+            return redirect("task", task_id=task_id)
+
+        if "update_submit" in request.POST:
+            form = self.form_class(request.POST, instance=task)
+            if form.is_valid():
+                form.save()
+                return redirect("task", task_id=task_id)
+            return render(request, "task.html", {"form": form})

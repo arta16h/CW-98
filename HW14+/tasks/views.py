@@ -101,3 +101,40 @@ class TaskDetailView(View):
                     return redirect("task", task_id=task_id)
                 return render(request, "task.html", {"form": form})
 
+class TaskUpdateView(View):
+    def post(self, request, *args, **kwargs):
+        task = Task.objects.get(pk=kwargs['pk'])
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        tags = request.POST.get('tag')
+        tags_list = []
+        try:
+            for tag in tags:
+                tags_list.append(Tag.objects.get(id=tag))
+        except:
+            pass
+        category = request.POST.get('category')
+        due_date = request.POST.get('due_date')
+        status = request.POST.get('status')
+        file = request.POST.get('file')
+
+        if title:
+            task.title = title
+        if description:
+            task.description = description
+        if tags_list:
+            task.tags.set(tags_list)
+        if category != "none":
+            task.category = Category.objects.get(id=category)
+        if due_date:
+            task.due_date = due_date
+        if status != "none":
+            task.status = status
+
+        task.save()
+
+        # history = update_cookie(request)
+        response = redirect('task_detail', kwargs['pk'])
+        # response.set_cookie('history', json.dumps(history))
+
+        return response
